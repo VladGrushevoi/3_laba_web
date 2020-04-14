@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>Нумерация страниц</title>
+  <link rel="stylesheet" href="./source/style.css">
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+     <script>
+         $(function() {
+             var sldr = $('.sldr'),
+                 sldrContent = sldr.html(),
+                 slideWidth = $('.sl_ctr').outerWidth(),
+                 slideCount = $('.sldr img').length,
+                 prv_b = $('.prv_b'),
+                 nxt_b = $('.nxt_b'),
+                 sldrInterval = 3300,
+                 animateTime = 1000,
+                 course = 1,
+                 margin = - slideWidth;
+             $('.sldr img:last').clone().prependTo('.sldr');$('.sldr img').eq(1).clone().appendTo('.sldr');$('.sldr').css('margin-left',-slideWidth);function nxt_bSlide(){interval=window.setInterval(animate,sldrInterval)}function animate(){if(margin==-slideCount*slideWidth-slideWidth){sldr.css({'marginLeft':-slideWidth});margin=-slideWidth*2}else if(margin==0&&course==-1){sldr.css({'marginLeft':-slideWidth*slideCount});margin=-slideWidth*slideCount+slideWidth}else{margin=margin-slideWidth*(course)}sldr.animate({'marginLeft':margin},animateTime)}function sldrStop(){window.clearInterval(interval)}prv_b.click(function(){if(sldr.is(':animated')){return false}var course2=course;course=-1;animate();course=course2});nxt_b.click(function(){if(sldr.is(':animated')){return false}var course2=course;course=1;animate();course=course2});sldr.add(nxt_b).add(prv_b).hover(function(){sldrStop()},nxt_bSlide);nxt_bSlide()});
+     </script>
+ </head>
+ <body>
+ <div class = "content">
+<div id = "container">
+ 	<div id = "leftThing">
+ 		<p>Заповніть поля вводу</p>
+ 		<form action="#">
+ 		<p><label>Имя:</label><input type="text" name="name" id="name" required><span></span></p>
+        <p><label>Фамилия:</label><input type="text" name="secondname" id="secondname" required><span></span></p>
+        <p><label>Страна:</label><input type="text" name="counrty" id="country" required><span></span></p>
+        <p><label>Город:</label><input type="text" name="city" id="city" required><span></span></p>
+        <p><label>Адрес:</label><input type="text" name="addres" id="addres" required><span></span></p>
+ 		<p><label>Почтовый индекс:</label><input type="number" max="99999" min="10000" name="postindex" id="postindex" required><span></span></p>
+ 		<p><label>E-mail:</label><input type="email" id = "email" required><span></span></p>
+ 		<p><input type="submit" id="check" required></p>
+ 		</form>
+        <!-- <button id="check">Show info</button> -->
+        <div id="result"></div>
+
+        <script>
+            function show_info() {
+                var fname = document.getElementById('name').value;
+                var lname = document.getElementById('secondname').value;
+                var country = document.getElementById('country').value;
+                var city = document.getElementById('city').value;
+                var addres = document.getElementById('addres').value;
+                var pIndex = document.getElementById('postindex').value;
+                var email = document.getElementById('email').value;
+
+
+                var html = 'Hello ' + fname +' ' + lname+' '+country+' '+city+' '+addres+' '+pIndex+' '+email;
+
+                document.getElementById('result').innerHTML = html;
+            }
+
+            document.getElementById('check').addEventListener('click', show_info);
+
+        </script>
+ 	</div>
+    <div id="content">
+        <div class="sl_ctr">
+            <div class="sldr">
+                <img src="source/images/1.png" alt="">
+                <img src="source/images/2.png" alt="">
+                <img src="source/images/3.png" alt="">
+                <img src="source/images/4.png" alt="">
+            </div>
+            <div class="prv_b"></div>
+            <div class="nxt_b"></div>
+        </div>
+    </div>
+    <div id = "rightThing">
+        <p><label>Введите строку:</label><input type="text" name="someText" id="someText" required><span></span></p>
+        <button id="formed">Сформировать список</button>
+        <div id="list"></div>
+        <script>
+            function formList(){
+                let arr = Array.from(document.getElementById('someText').value);
+                if(arr.length === 0){
+                    return;
+                }
+                if(arr.length%2===1){
+                    arr.push('_')
+                }
+                let html ;
+                html = '<ul>';
+                for(let i =0; i<arr.length;i+=2){
+                    html += '<li>'+arr[i]+''+arr[i+1]+'</li>';
+                }
+                html += '</ul>';
+                arr.length = 0;
+                document.getElementById('list').innerHTML = html;
+            }
+
+            document.getElementById('formed').addEventListener('click', formList);
+        </script>
+    </div>
+</div>
+    <div class="css"></div>
+</div>
+ </body>
+</html>

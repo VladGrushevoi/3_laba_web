@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  webapp:
+    build:
+      context: ./httpd
+      dockerfile: Dockerfile
+    ports:
+      - 5555:80
